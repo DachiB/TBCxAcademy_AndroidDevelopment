@@ -25,16 +25,16 @@ fun String.numberizer(): Float {
 
 fun play() {
     println("შეიყვანე X:")
-    val inputX: String = readln()
+    val inputX = readln()
 
     println("შეიყვანე Y:")
-    val inputY: String = readln()
+    val inputY = readln()
 
     val resultX = inputX.numberizer()
     val resultY = inputY.numberizer()
 
     if (resultY == 0.0f) {
-        println("0ზე გაყოფა არშეიძლება სცადეთ თავიდან")
+        println("0ზე გაყოფა არშეიძლება სცადეთ თავიდან!")
         play()
     } else {
         val resultZ = resultX / resultY
@@ -47,7 +47,7 @@ fun play() {
 
 fun tryAgain() {
     println("გსურთ პროგრამის ხელახლა დაწყება <Y/N>?")
-    val answer: String = readln()
+    val answer = readln()
 
     when (answer.lowercase()) {
         "y" -> play()
