@@ -1,47 +1,59 @@
 package com.example.mainapplication
-import kotlin.system.exitProcess
 
 fun main() {
-    play()
+    println(usg(18, 36))
+    println(hasDollar("Guc${'$'}ciMane"))
+    println(palindromeCheck("madam"))
+    println(evenSum())
 }
 
-fun String.numberizer(): Float {
-    var appendString = ""
-    for (i in this) {
-        if (i.isDigit()) {
-            val result = i.toString()
-            appendString += result
+fun usg(first: Int, second: Int): Int {
+    var usg = 0
+    val min = if (first < second) first else second
+    val max = if (first > second) first else second
+    println("$min , $max")
+    for (i in min downTo 1) {
+        if (max % i == 0 && min % i == 0) {
+            usg = i
+            break
         }
     }
-    return if (this.isNotEmpty()) {
-        appendString.toFloat()
-    } else {
-        0.0f
-    }
+    return usg
 }
 
-fun play() {
-    println("შეიყვანე X:")
-    val inputX: String = readln()
-    println("შეიყვანე Y:")
-    val inputY: String = readln()
-    val resultX = inputX.numberizer()
-    val resultY = inputY.numberizer()
-    val resultZ = resultX / resultY
-    println("X: $resultX, Y: $resultY")
-    println("X და Y განაყოფი არის: $resultZ")
-    tryAgain()
+fun evenSum(): Int {
+    var sum = 0
+    for (i in 1..100) {
+        if (i % 2 == 0) {
+            sum += i
+        }
+    }
+    return sum
 }
 
-fun tryAgain() {
-    println("გსურთ პროგრამის ხელახლა დაწყება <Y/N>?")
-    val answer: String = readln()
-    if (answer.lowercase() == "y") {
-        play()
-    } else if (answer.lowercase() == "n") {
-        exitProcess(0)
-    } else {
-        println("შეიყვანე სწორი პასუხი Y/N")
-        tryAgain()
+fun hasDollar(str: String): Boolean {
+    var hasDollar = false
+    for (char in str) {
+        if (char == '$') {
+            hasDollar = true
+            break
+        }
     }
+    return hasDollar
 }
+
+fun palindromeCheck (str: String): Boolean {
+    val isPalindrome = str.lowercase() == str.lowercase().reversed()
+    return isPalindrome
+}
+
+//fun palindromeCheck2 (str: String) {
+//    val result = ceil(str.length.toFloat()/2).toInt()
+//    for (i in str.length - 1 downTo result) {
+//        println(str[i])
+//        for (j in 0 until str.length / 2) {
+//            println(str[j])
+//        }
+//    }
+//
+//}
