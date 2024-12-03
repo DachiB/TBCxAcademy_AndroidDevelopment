@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun numberToGeo(number: Int): String {
         val units = arrayOf(
-            "", "", "ორი", "სამი", "ოთხი", "ხუთი", "ექვსი", "შვიდი", "რვა", "ცხრა"
+            "", "ერთი", "ორი", "სამი", "ოთხი", "ხუთი", "ექვსი", "შვიდი", "რვა", "ცხრა"
         )
         val teens = arrayOf(
             "ათი", "თერთმეტი", "თორმეტი", "ცამეტი", "თოთხმეტი", "თხუთმეტი",
@@ -53,7 +53,12 @@ class MainActivity : AppCompatActivity() {
         return when {
             number == 1000 -> "ათასი"
             number >= 100 -> {
-                val hundredCheck = units[number / 100].dropLast(1) + "ასი"
+                val hundredCheck = if (number < 200) {
+                    "ასი"
+                } else {
+                    units[number / 100].dropLast(1) + "ასი"
+                }
+
                 val indexCheck = number % 100
                 val indexCheck2 = number % 10
                 if (indexCheck == 0)
