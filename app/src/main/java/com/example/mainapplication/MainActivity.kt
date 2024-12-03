@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
             number >= 100 -> {
                 val hundredCheck = if (number < 200) {
                     "ასი"
+                } else if (number >= 800) {
+                    units[number / 100] + "ასი"
                 } else {
                     units[number / 100].dropLast(1) + "ასი"
                 }
@@ -65,19 +67,19 @@ class MainActivity : AppCompatActivity() {
                 {
                     return hundredCheck
                 } else if (indexCheck2 == 0) {
-                    return "${hundredCheck.dropLast(1)}${numberToGeo(indexCheck)}"
+                    return "${hundredCheck.dropLast(1)} ${numberToGeo(indexCheck)}"
                 }
                 else {
-                    return "${hundredCheck.dropLast(1)}${numberToGeo(indexCheck)}"
+                    return "${hundredCheck.dropLast(1)} ${numberToGeo(indexCheck)}"
                 }
             }
             number >= 20 -> {
                 val tenPart = tens[number / 10]
                 val unitPart = if(number % 20 < 10) units[number % 10] else teens[number % 10]
                 return if(number % 20 < 10) {
-                    "${tenPart.dropLast(1)}და$unitPart"
+                    "${tenPart.dropLast(1)}და $unitPart"
                 } else {
-                    "${tenPart.dropLast(3)}$unitPart"
+                    "${tenPart.dropLast(3)} $unitPart"
                 }
             }
             number >= 10 -> teens[number - 10]
