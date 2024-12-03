@@ -3,62 +3,110 @@ package com.example.mainapplication
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.appcompat.widget.SwitchCompat
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        val inputEditText: EditText = findViewById(R.id.inputEditText)
+        val outputTextView: TextView = findViewById(R.id.outputTextView)
+        val toggleSwitch: SwitchCompat = findViewById(R.id.languageToggle)
+        val convertButton: AppCompatButton = findViewById(R.id.convertButton)
 
-        setup()
+        convertButton.setOnClickListener {
+            val inputText = inputEditText.text.toString()
+            val number = inputText.toIntOrNull()
+
+            if (number != null && number in 1..1000) {
+                outputTextView.text = if (toggleSwitch.isChecked) {
+                    numberToEng(number)
+                } else {
+                    numberToGeo(number)
+                }
+            } else {
+                outputTextView.text = if (toggleSwitch.isChecked) {
+                    "Please enter a number between 1 and 1000"
+                } else {
+                    "შეიყვანეთ რიცხვი 1-დან 1000-მდე"
+                }
+            }
+        }
     }
 
-    private fun setup() {
-        val input: EditText = findViewById(R.id.editText)
-        val button: AppCompatButton = findViewById(R.id.Submit)
-        val textView: TextView = findViewById(R.id.textView)
+    private fun numberToGeo(number: Int): String {
+        val units = arrayOf(
+            "", "", "ორი", "სამი", "ოთხი", "ხუთი", "ექვსი", "შვიდი", "რვა", "ცხრა"
+        )
+        val teens = arrayOf(
+            "ათი", "თერთმეტი", "თორმეტი", "ცამეტი", "თოთხმეტი", "თხუთმეტი",
+            "თექვსმეტი", "ჩვიდმეტი", "თვრამეტი", "ცხრამეტი"
+        )
+        val tens = arrayOf(
+            "", "", "ოცი", "ოცდაათი", "ორმოცი", "ორმოცდაათი", "სამოცი",
+            "სამოცდაათი", "ოთხმოცი", "ოთხმოცდაათი"
+        )
 
-        button.setOnClickListener {
-            textView.text = convertNumber(input.text.toString().toInt())
+        return when {
+            number == 1000 -> "ათასი"
+            number >= 100 -> {
+                val hundredCheck = units[number / 100].dropLast(1) + "ასი"
+                val indexCheck = number % 100
+                val indexCheck2 = number % 10
+                if (indexCheck == 0)
+                {
+                    return hundredCheck
+                } else if (indexCheck2 == 0) {
+                    return "${hundredCheck.dropLast(1)}${numberToGeo(indexCheck)}"
+                }
+                else {
+                    return "${hundredCheck.dropLast(1)}${numberToGeo(indexCheck)}"
+                }
+            }
+            number >= 20 -> {
+                val tenPart = tens[number / 10]
+                val unitPart = if(number % 20 < 10) units[number % 10] else teens[number % 10]
+                return if(number % 20 < 10) {
+                    "${tenPart.dropLast(1)}და$unitPart"
+                } else {
+                    "${tenPart.dropLast(3)}$unitPart"
+                }
+            }
+            number >= 10 -> teens[number - 10]
+            else -> units[number]
         }
     }
 
-    private fun convertNumber(number: Int): String {
-        var result = ""
-        val ciprebi = listOf(
-            "ერთი", "ორი", "სამი" ,
-            "ოთხი" , "ხუთი", "ექვსი",
-            "შვიდი", "რვა", "ცხრა")
-        val ricxvebi = listOf(
-            "თერთმეტი", "თორმეტი", "ცამეტი",
-            "თოთხმეტი", "თხუთმეტი", "თექვმეტი",
-            "ჩვიდმეტი", "თვრამეტი", "ცხრამეი")
-        val ricxvebi2 = listOf(
-            "ათი", "ოცი", "ოცდაათი",
-            "ორმოცი", "ორმოცდაათი","სამოცი",
-            "სამოცდაათი","ოთხმოცი","ოთხომცდაათი")
-        val ricxvebi3 = listOf(
-            "ასი", "ორასი", "სამასი",
-            "ოთხასი", "ხუთასი","ექვსასი",
-            "შვიდასი","რვაასი","ცხრაასი")
+    private fun numberToEng(number: Int): String {
+        val units = arrayOf(
+            "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+        )
+        val teens = arrayOf(
+            "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+            "sixteen", "seventeen", "eighteen", "nineteen"
+        )
+        val tens = arrayOf(
+            "", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy",
+            "eighty", "ninety"
+        )
 
-        if (number in 1..9) {
-            result = ciprebi[number] + 1
+        return when {
+            number == 1000 -> "one thousand"
+            number >= 100 -> {
+                val hundredCheck = units[number / 100] + " hundred"
+                val indexCheck = number % 100
+                if (indexCheck == 0) hundredCheck else "$hundredCheck and ${numberToEng(indexCheck)}"
+            }
+            number >= 20 -> {
+                val tenPart = tens[number / 10]
+                val unitPart = units[number % 10]
+                "$tenPart $unitPart".trim()
+            }
+            number >= 10 -> teens[number - 10]
+            else -> units[number]
         }
-
-        return result
     }
-
 }
