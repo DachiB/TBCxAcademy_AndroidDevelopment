@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         val toggleSwitch: SwitchCompat = findViewById(R.id.languageToggle)
         val convertButton: AppCompatButton = findViewById(R.id.convertButton)
 
+        //სად ჯობია შეიქმნას?
+        // ლექტორი ქ*ქ^3
         convertButton.setOnClickListener {
             val inputText = inputEditText.text.toString()
             val number = inputText.toIntOrNull()
