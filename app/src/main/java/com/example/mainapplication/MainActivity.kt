@@ -1,16 +1,14 @@
 package com.example.mainapplication
 
+import android.app.Person
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
-//მოვიძიო ინფო: Patterns.EMAIL_ADDRESS.matcher, editTextList.any და setOnLongClickListenerზე
-//StackOverflow
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,79 +16,63 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        val email: EditText = findViewById(R.id.email)
-        val username: EditText = findViewById(R.id.userName)
-        val firstName: EditText = findViewById(R.id.firstName)
-        val lastName: EditText = findViewById(R.id.lastName)
-        val age: EditText = findViewById(R.id.age)
-        val save: Button = findViewById(R.id.save)
-        val clear: Button = findViewById(R.id.clear)
-        val result: TextView = findViewById(R.id.result)
-        val texts: LinearLayout = findViewById(R.id.texts)
-        val edits: LinearLayout = findViewById(R.id.edits)
+        val name = findViewById<EditText>(R.id.name)
+        val email = findViewById<EditText>(R.id.email)
+        val userCount = findViewById<TextView>(R.id.userCount)
+        val addUser = findViewById<Button>(R.id.addUser)
+        val result = findViewById<TextView>(R.id.result)
+        val findEmail = findViewById<EditText>(R.id.findEmail)
+        val getUser = findViewById<Button>(R.id.getUser)
+        val userInfo = findViewById<TextView>(R.id.userInfo)
 
-        val editTextList = listOf(email, username, firstName, lastName, age)
+        data class Person(val name: String, val email: String)
 
-        fun checkValues(): Boolean {
-            val isNotEmpty = editTextList.any { it.text.isNotEmpty()}
-            val checkNum = age.text.toString().isNotEmpty() //Null? ჩეკიც შეიძლეობდა?
-            val userNameLength = username.text.length > 10
-            val emailValid = Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()
+        val usersArr = mutableListOf<Person>()
 
-            return userNameLength && emailValid && isNotEmpty && checkNum
-        }
-
-        fun clearValues() {
-            editTextList.forEach { it.text.clear() }
-        }
-
-        fun generateResult() {
-            texts.removeAllViews()
-            texts.visibility = LinearLayout.VISIBLE
-            edits.visibility = LinearLayout.GONE
-            result.text = ""
-
-            val header = TextView(this)
-            header.text = "Profile Info"
-            header.textSize = 20f
-            header.setPadding(0, 16, 0, 16)
-            texts.addView(header)
-
-            var i = 0
-            while (i < editTextList.size) {
-                val textView = TextView(this)
-                if (i == 2 && i + 1 < editTextList.size) {
-                    textView.text = "Full Name : ${editTextList[i].text} ${editTextList[i + 1].text}"
-                    i += 2
-                } else {
-                    textView.text = "${editTextList[i].hint} : ${editTextList[i].text}"
-                    i++
+        fun checkUser(name: String, email: String): Boolean {
+            var userExists = false
+            for (item in usersArr) {
+                if (item.name == name || item.email == email) {
+                    userExists = true
                 }
-                texts.addView(textView)
             }
-
-            val button = Button(this)
-            button.text = "Again"
-            texts.addView(button)
-
-            button.setOnClickListener {
-                texts.visibility = LinearLayout.GONE
-                edits.visibility = LinearLayout.VISIBLE
-                clearValues()
-            }
+            return userExists
         }
 
-        save.setOnClickListener {
-           if (checkValues()) {
-               generateResult()
-           } else {
-              result.text = "მონაცემები არასწორია"
-           }
+        fun checkValues() {
+            if (name.text.isEmpty() || email.text.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
+                result.text = "Please enter valid values"
+            } else if (checkUser(name.text.toString(), email.text.toString())) {
+                    result.text = "User already exists"
+                } else {
+                    usersArr.add(Person(name.text.toString(), email.text.toString()))
+                    userCount.text = "User Count: ${usersArr.size}"
+                    result.text = "User Added"
+                    name.text.clear()
+                    email.text.clear()
+                }
+            }
+
+
+
+        addUser.setOnClickListener {
+            checkValues()
         }
 
-        clear.setOnLongClickListener {
-            clearValues()
-            true
+        getUser.setOnClickListener {
+            var found = false
+            for (item in usersArr) {
+                if (item.email == findEmail.text.toString()) {
+                    userInfo.text = "Name: ${item.name} \nEmail: ${item.email}"
+                    findEmail.text.clear()
+                    found = true
+                    break
+                }
+                }
+            if (!found) {
+                userInfo.text = "User not found"
+            }
         }
     }
 }
+

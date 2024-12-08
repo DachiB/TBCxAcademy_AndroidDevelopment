@@ -3,101 +3,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="64dp"
     android:id="@+id/main">
 
-        <LinearLayout
-            android:id="@+id/edits"
+        <androidx.appcompat.widget.AppCompatEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="50dp"
+            android:hint="Enter Full Name"
+            android:inputType="text"
+            android:id="@+id/name">
 
-                <TextView
-                    android:id="@+id/header"
-                    android:text="@string/header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:paddingTop="24dp"
-                    android:gravity="center" />
+        </androidx.appcompat.widget.AppCompatEditText>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="E-mail"
-                    android:inputType="textEmailAddress"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/userName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Username"
-                    android:inputType="text"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/firstName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Firstname"
-                    android:inputType="text"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/lastName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Lastname"
-                    android:inputType="text"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Age"
-                    android:inputType="number"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="save"
-                    android:paddingBottom="16dp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/clear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="clear"
-                    android:paddingBottom="16dp" />
-
-                <TextView
-                    android:id="@+id/result"
-                    android:text=""
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:paddingTop="16dp"
-                    android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:id="@+id/texts"
+        <androidx.appcompat.widget.AppCompatEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="36dp"
-            android:visibility="invisible"
-            >
+            android:layout_height="50dp"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/email">
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Add User"
+            android:id="@+id/addUser">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="User Count: 0"
+            android:id="@+id/userCount">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=""
+            android:id="@+id/result">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="User Email"
+            android:inputType="text"
+            android:id="@+id/findEmail">
+
+        </androidx.appcompat.widget.AppCompatEditText>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Get User Info"
+            android:id="@+id/getUser">
+
+        </androidx.appcompat.widget.AppCompatButton>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=""
+            android:id="@+id/userInfo">
+
+        </androidx.appcompat.widget.AppCompatTextView>
 
 
-        </LinearLayout>
 </LinearLayout>
 
 
