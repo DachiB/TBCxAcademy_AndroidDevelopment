@@ -1,8 +1,6 @@
 package com.example.mainapplication
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -16,35 +14,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        val words = findViewById<EditText>(R.id.words)
-        val save = findViewById<Button>(R.id.save)
-        val output = findViewById<Button>(R.id.output)
-        val result = findViewById<LinearLayout>(R.id.result)
-        val entry = findViewById<TextView>(R.id.entry)
-        val clear = findViewById<Button>(R.id.clear)
+        setContentView(binding.root)
 
         val myArray = mutableListOf<String>()
 
-        save.setOnClickListener {
-            val word = words.text.toString()
+        binding.save.setOnClickListener {
+            val word = binding.words.text.toString()
             if (word.isNotEmpty()) {
                 myArray.add(word)
-                words.text.clear()
+                binding.words.text?.clear()
             }
-            entry.text = myArray.toString()
+            binding.entry.text = myArray.toString()
         }
 
-        clear.setOnClickListener {
+        binding.clear.setOnClickListener {
             myArray.clear()
-            entry.text = ""
-            result.removeAllViews()
+            binding.entry.text = ""
+            binding.result.removeAllViews()
         }
 
-        output.setOnClickListener {
-            result.removeAllViews()
+        binding.output.setOnClickListener {
+            binding.result.removeAllViews()
             val groupedAnagrams = mutableListOf<MutableList<String>>()
 
             for (i in myArray.indices) {
@@ -65,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             for (group in groupedAnagrams) {
                 val textView = TextView(this)
                 textView.text = group.toString()
-                result.addView(textView)
+                binding.result.addView(textView)
             }
         }
     }
