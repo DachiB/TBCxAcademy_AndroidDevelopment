@@ -1,78 +1,74 @@
 package com.example.mainapplication
 
-import android.app.Person
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mainapplication.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
 
-        val name = findViewById<EditText>(R.id.name)
-        val email = findViewById<EditText>(R.id.email)
-        val userCount = findViewById<TextView>(R.id.userCount)
-        val addUser = findViewById<Button>(R.id.addUser)
-        val result = findViewById<TextView>(R.id.result)
-        val findEmail = findViewById<EditText>(R.id.findEmail)
-        val getUser = findViewById<Button>(R.id.getUser)
-        val userInfo = findViewById<TextView>(R.id.userInfo)
+        val words = findViewById<EditText>(R.id.words)
+        val save = findViewById<Button>(R.id.save)
+        val output = findViewById<Button>(R.id.output)
+        val result = findViewById<LinearLayout>(R.id.result)
+        val entry = findViewById<TextView>(R.id.entry)
+        val clear = findViewById<Button>(R.id.clear)
 
-        data class Person(val name: String, val email: String)
+        val myArray = mutableListOf<String>()
 
-        val usersArr = mutableListOf<Person>()
-
-        fun checkUser(name: String, email: String): Boolean {
-            var userExists = false
-            for (item in usersArr) {
-                if (item.name == name || item.email == email) {
-                    userExists = true
-                }
+        save.setOnClickListener {
+            val word = words.text.toString()
+            if (word.isNotEmpty()) {
+                myArray.add(word)
+                words.text.clear()
             }
-            return userExists
+            entry.text = myArray.toString()
         }
 
-        fun checkValues() {
-            if (name.text.isEmpty() || email.text.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
-                result.text = "Please enter valid values"
-            } else if (checkUser(name.text.toString(), email.text.toString())) {
-                    result.text = "User already exists"
-                } else {
-                    usersArr.add(Person(name.text.toString(), email.text.toString()))
-                    userCount.text = "User Count: ${usersArr.size}"
-                    result.text = "User Added"
-                    name.text.clear()
-                    email.text.clear()
+        clear.setOnClickListener {
+            myArray.clear()
+            entry.text = ""
+            result.removeAllViews()
+        }
+
+        output.setOnClickListener {
+            result.removeAllViews()
+            val groupedAnagrams = mutableListOf<MutableList<String>>()
+
+            for (i in myArray.indices) {
+                var isGrouped = false
+
+                for (group in groupedAnagrams) {
+                    if (group[0].toCharArray().sorted() == myArray[i].toCharArray().sorted()) {
+                        group.add(myArray[i])
+                        isGrouped = true
+                        break
+                    }
+                }
+                if (!isGrouped) {
+                    groupedAnagrams.add(mutableListOf(myArray[i]))
                 }
             }
 
-
-
-        addUser.setOnClickListener {
-            checkValues()
-        }
-
-        getUser.setOnClickListener {
-            var found = false
-            for (item in usersArr) {
-                if (item.email == findEmail.text.toString()) {
-                    userInfo.text = "Name: ${item.name} \nEmail: ${item.email}"
-                    findEmail.text.clear()
-                    found = true
-                    break
-                }
-                }
-            if (!found) {
-                userInfo.text = "User not found"
+            for (group in groupedAnagrams) {
+                val textView = TextView(this)
+                textView.text = group.toString()
+                result.addView(textView)
             }
         }
     }
 }
+
 
