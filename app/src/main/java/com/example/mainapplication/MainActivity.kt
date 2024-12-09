@@ -1,29 +1,20 @@
 package com.example.mainapplication
 
-import android.app.Person
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mainapplication.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-
-        val name = findViewById<EditText>(R.id.name)
-        val email = findViewById<EditText>(R.id.email)
-        val userCount = findViewById<TextView>(R.id.userCount)
-        val addUser = findViewById<Button>(R.id.addUser)
-        val result = findViewById<TextView>(R.id.result)
-        val findEmail = findViewById<EditText>(R.id.findEmail)
-        val getUser = findViewById<Button>(R.id.getUser)
-        val userInfo = findViewById<TextView>(R.id.userInfo)
 
         data class Person(val name: String, val email: String)
 
@@ -40,37 +31,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun checkValues() {
-            if (name.text.isEmpty() || email.text.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
-                result.text = "Please enter valid values"
-            } else if (checkUser(name.text.toString(), email.text.toString())) {
-                    result.text = "User already exists"
+            if (binding.name.text?.isEmpty() == true || binding.email.text?.isEmpty() == true || !Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
+                binding.result.text = "Please enter valid values"
+            } else if (checkUser(binding.name.text.toString(), binding.email.text.toString())) {
+                    binding.result.text = "User already exists"
                 } else {
-                    usersArr.add(Person(name.text.toString(), email.text.toString()))
-                    userCount.text = "User Count: ${usersArr.size}"
-                    result.text = "User Added"
-                    name.text.clear()
-                    email.text.clear()
+                    usersArr.add(Person(binding.name.text.toString(), binding.email.text.toString()))
+                    binding.userCount.text = "User Count: ${usersArr.size}"
+                    binding.result.text = "User Added"
+                binding.name.text?.clear()
+                binding.email.text?.clear()
                 }
             }
 
 
 
-        addUser.setOnClickListener {
+        binding.addUser.setOnClickListener {
             checkValues()
         }
 
-        getUser.setOnClickListener {
+        binding.getUser.setOnClickListener {
             var found = false
             for (item in usersArr) {
-                if (item.email == findEmail.text.toString()) {
-                    userInfo.text = "Name: ${item.name} \nEmail: ${item.email}"
-                    findEmail.text.clear()
+                if (item.email == binding.findEmail.text.toString()) {
+                    binding.userInfo.text = "Name: ${item.name} \nEmail: ${item.email}"
+                    binding.findEmail.text?.clear()
                     found = true
                     break
                 }
                 }
             if (!found) {
-                userInfo.text = "User not found"
+                binding.userInfo.text = "User not found"
             }
         }
     }
