@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mainapplication.databinding.ActivityMainBinding
 
 
+
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -20,11 +22,15 @@ class MainActivity : AppCompatActivity() {
         val myArray = mutableListOf<String>()
 
         binding.save.setOnClickListener {
-            val word = binding.words.text.toString()
-            if (word.isNotEmpty()) {
-                myArray.add(word)
-                binding.words.text?.clear()
+            val words = if (binding.words.text?.contains(",") == true) {
+                binding.words.text!!.trim().split(",").toList()
+                } else {
+                listOf(binding.words.text.toString())
             }
+            for (word in words){
+                myArray.add(word.trim())
+            }
+            binding.words.text?.clear()
             binding.entry.text = myArray.toString()
         }
 
@@ -58,6 +64,8 @@ class MainActivity : AppCompatActivity() {
                 textView.text = group.toString()
                 binding.result.addView(textView)
             }
+
+            binding.count.text = "Group Count: ${groupedAnagrams.size}"
         }
     }
 }
