@@ -7,7 +7,7 @@
     android:paddingLeft="28dp"
     android:paddingTop="64dp"
     android:paddingRight="28dp"
-    android:paddingBottom="28dp">
+    android:paddingBottom="0dp">
 
 
     <FrameLayout
@@ -19,7 +19,8 @@
             android:background="@drawable/rounded_transparent"
             android:clipToOutline="true"
             android:contentDescription="@string/mountain"
-            android:src="@drawable/mountain">
+            android:src="@drawable/mountain"
+            android:scaleType="centerCrop">
 
         </ImageView>
 
@@ -43,10 +44,12 @@
             android:src="@drawable/save" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="331dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="24dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
             android:background="@drawable/rounded_blue"
             android:orientation="vertical"
             android:padding="12dp">
@@ -63,7 +66,7 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginBottom="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -101,7 +104,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/south_america"
-                                android:textColor="@color/white"
+                                android:textColor="#CAC8C8"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -137,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/details"
-            android:textColor="#1B1B1B9E"
+            android:textColor="#777777"
             android:textSize="16sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -149,30 +152,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:background="@drawable/rounded_black"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_gray"
                 android:contentDescription="@string/backButton"
-                android:src="@drawable/iconclock" />
+                android:src="@drawable/iconclock"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_8_hours"
                 android:textColor="#7E7E7E"
+                android:textSize="18sp"
                 android:layout_gravity="center"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_gray"
+                android:contentDescription="@string/backButton"
+                android:src="@drawable/iconcloud"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8 Hours"
+                android:text="@string/temperature"
+                android:textSize="18sp"
                 android:textColor="#7E7E7E"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -180,19 +190,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_gray"
+                android:contentDescription="@string/backButton"
+                android:src="@drawable/iconstar"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8 Hours"
+                android:text="@string/rating"
+                android:textSize="18sp"
                 android:textColor="#7E7E7E"
                 android:layout_gravity="center"/>
         </LinearLayout>
-
     </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/lorem_ipsum"
+        android:textColor="#A5A5A5"
+        android:textSize="18sp" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@drawable/rounded_black">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book_now"
+                android:textSize="20sp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/white"/>
+            <ImageView
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/sendicon"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    </FrameLayout>
+
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
