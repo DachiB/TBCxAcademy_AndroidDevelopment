@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             if (!userExists) {
                 usersArr.add(user)
                 showResult(getString(R.string.user_added_succesfully), R.color.green)
+                binding.activeUsers.text = "Active Users: ${usersArr.size}"
                 clearFields()
             } else {
                 showResult(getString(R.string.user_already_exists), R.color.red)
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun removeUser() {
+            var deletedUsers = 0
             val user = User(
                 binding.first.text.toString(),
                 binding.last.text.toString(),
@@ -68,9 +70,12 @@ class MainActivity : AppCompatActivity() {
             )
             val userExists = usersArr.find { it == user }
             if (userExists != null) {
+                deletedUsers++
                 usersArr.remove(user)
                 showResult(getString(R.string.user_deleted_succesfully), R.color.green)
                 clearFields()
+                binding.activeUsers.text = "Active Users: ${usersArr.size}"
+                binding.deletedUsers.text = "Deleted Users: $deletedUsers"
             } else {
                 showResult(getString(R.string.user_doesn_t_exist), R.color.red)
             }

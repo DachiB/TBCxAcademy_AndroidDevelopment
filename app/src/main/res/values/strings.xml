@@ -18,4 +18,6 @@
     <string name="can_t_update_non_existing_user">Can\'t update non-existing user</string>
     <string name="update_user">Update User</string>
     <string name="user_updated_succesfully">User Updated Succesfully</string>
+    <string name="active_users_0">Active Users: 0</string>
+    <string name="deleted_users_0">Deleted Users: 0</string>
 </resources>
