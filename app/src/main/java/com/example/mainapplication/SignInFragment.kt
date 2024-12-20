@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
@@ -23,6 +24,8 @@ class SignInFragment : Fragment() {
         val emailInput = view.findViewById<EditText>(R.id.emailInput)
         val passwordInput = view.findViewById<EditText>(R.id.passwordInput)
         val passwordVisibility = view.findViewById<Button>(R.id.passwordVisibility)
+        val emailContainer = view.findViewById<FrameLayout>(R.id.emailContainer)
+        val passwordContainer = view.findViewById<FrameLayout>(R.id.passContainer)
 
         fun checkValues(): Boolean {
             return emailInput.text.toString().isNotEmpty() && passwordInput.text.toString()
@@ -46,6 +49,23 @@ class SignInFragment : Fragment() {
                 passwordInput.text.clear()
             } else {
                 Toast.makeText(requireContext(), "Invalid Input!", Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+        emailInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                emailContainer.alpha = 1.0f
+            } else {
+                emailContainer.alpha = 0.5f
+            }
+        }
+
+        passwordInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                passwordContainer.alpha = 1.0f
+            } else {
+                passwordContainer.alpha = 0.5f
             }
         }
 
