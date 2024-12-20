@@ -3,13 +3,18 @@ package com.example.mainapplication
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mainapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        //აქ ცოტა გამიჭირდა მოვიძიე ინფორმაცია StackOverflowან და დავიხმარე ჩატი
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, HomeFragment())

@@ -89,7 +89,7 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_sign_in"
+        android:id="@+id/signIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -108,7 +108,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_sign_in">
+        app:layout_constraintTop_toBottomOf="@+id/signIn">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"

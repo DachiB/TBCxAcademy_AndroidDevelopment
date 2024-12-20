@@ -4,34 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.mainapplication.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+
+    private var binding: FragmentHomeBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container , false )
 
-        val signIn = view.findViewById<Button>(R.id.button_sign_in)
-        val singUp = view.findViewById<Button>(R.id.singUp)
-
-        signIn.setOnClickListener {
+        binding?.signIn?.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SignInFragment())
                 .addToBackStack("HomeFragment")
                 .commit()
         }
-        singUp.setOnClickListener {
+        binding?.singUp?.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, SignInFragment())
                 .addToBackStack("HomeFragment")
                 .commit()
         }
 
-        return view
+        return binding?.root
     }
 }
 
