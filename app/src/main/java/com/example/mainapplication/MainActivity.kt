@@ -79,8 +79,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.saveButton.setOnClickListener {
-            binding.searchPage.visibility = View.VISIBLE
-            binding.addUserPage.visibility = View.GONE
             addUser()
         }
 
@@ -88,6 +86,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun addUser(){
         if (checkValues()) {
+            binding.searchPage.visibility = View.VISIBLE
+            binding.addUserPage.visibility = View.GONE
             val newUser = User(
                 id = (1..1000).random(),
                 firstName = binding.firstNameInput.text.toString(),
