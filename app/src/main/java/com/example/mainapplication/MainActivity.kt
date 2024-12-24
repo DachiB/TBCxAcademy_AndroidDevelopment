@@ -1,7 +1,6 @@
 package com.example.mainapplication
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -9,14 +8,17 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mainapplication.databinding.ActivityMainBinding
+import com.example.mainapplication.databinding.ItemItemBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var itemBinding: ItemItemBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        itemBinding = ItemItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val itemList = listOf(
@@ -38,14 +40,15 @@ class MainActivity : AppCompatActivity() {
             Item("Just-A-Coat", "Category 3", R.drawable.icon_image6),
         )
 
-        val categoryList =
-            listOf(
-                "All",
-                "Party",
-                "Camping",
-                "Category 1",
-                "Category 2",
-                "Category 3"
+        val categoryList = //შევქმენი მაპი რომ ემოჯიებიც მქონოდა და ფილტრსაც მხოლოდ ტექსტზე ემუშავა
+            mapOf(
+                "Favorites" to "",
+                "All" to "",
+                "Party" to "\uD83C\uDF89",
+                "Camping" to "\uD83C\uDFD5\uFE0F",
+                "Category 1" to "",
+                "Category 2" to "",
+                "Category 3" to ""
             )
 
         val recyclerView = binding.recyclerView
@@ -61,16 +64,31 @@ class MainActivity : AppCompatActivity() {
         view.adapter = GridAdapter(itemList)
     }
 
-    private fun filterItems(view: RecyclerView, itemDescription: String, itemList: List<Item>) {
+    private fun filterItems(
+        view: RecyclerView,
+        filterProperty: Any,
+        itemList: List<Item>,
+        filterBy: (Item) -> Any //მინდოდა პარამეტრი მქონოდა რო მერე არგუმენტად მივაწოდო რისი მიხედვით გავფილტრავ, დავიხმარე ჩატი
+    ) {
         val filteredList =
-            itemList.filter { it.category.contains(itemDescription, ignoreCase = true) }
+            itemList.filter {
+                when (filterProperty) {
+                    is String -> filterBy(it).toString()
+                        .contains(filterProperty, ignoreCase = true)
+                    is Boolean -> filterBy(it) == filterProperty
+                    else -> false
+                }
+            }
         view.adapter = GridAdapter(filteredList)
     }
 
-    private fun setUpCategories(view: RecyclerView, category: String, itemList: List<Item>) {
+    private fun setUpCategories(
+        view: RecyclerView,
+        category: Map.Entry<String, String>,
+        itemList: List<Item>
+    ) {
         val button = Button(this)
-//        button.id = View.generateViewId()
-        button.text = category
+        button.text = "${category.value} ${category.key}"
         button.background = AppCompatResources.getDrawable(this, R.drawable.bordered_blue)
         button.setTextColor(getColor(R.color.buttonColor))
         button.setPadding(24, 8, 24, 8)
@@ -83,10 +101,10 @@ class MainActivity : AppCompatActivity() {
         button.layoutParams = layoutParams
 
         button.setOnClickListener {
-            if (button.text == "All") {
-                setUpItems(view, itemList)
-            } else {
-                filterItems(view, button.text.toString(), itemList)
+            when (category.key) {
+                "All" -> setUpItems(view, itemList)
+                "Favorites" -> filterItems(view, true, itemList, Item::favorite)
+                else -> filterItems(view, category.key, itemList, Item::category)
             }
         }
 
