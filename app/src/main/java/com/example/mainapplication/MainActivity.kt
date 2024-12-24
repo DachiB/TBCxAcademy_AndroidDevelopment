@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         itemList: List<Item>
     ) {
         val button = Button(this)
-        button.text = "${category.value} ${category.key}"
+        button.text = getString(R.string.category_text, category.value, category.key)
         button.background = AppCompatResources.getDrawable(this, R.drawable.bordered_blue)
         button.setTextColor(getColor(R.color.buttonColor))
         button.setPadding(24, 8, 24, 8)

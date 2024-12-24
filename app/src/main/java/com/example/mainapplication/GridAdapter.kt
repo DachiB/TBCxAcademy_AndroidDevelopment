@@ -28,7 +28,10 @@ class GridAdapter(private val items: List<Item>) :
             imageView.setImageResource(item.image)
             favoriteButton.setImageResource(if (item.favorite) R.drawable.icon_heart_fill else R.drawable.icon_heart)
             titleView.text = item.title
-            priceView.text = "$${item.price}"
+            priceView.text = buildString { //ეს თვითონ მირჩია, ვორნინგი რო გაექრო სეტ ტექსტზე
+                append("$")
+                append(item.price)
+            }
             favoriteButton.setOnClickListener {
                 if (!item.favorite) {
                     holder.favoriteButton.setImageResource(R.drawable.icon_heart_fill)

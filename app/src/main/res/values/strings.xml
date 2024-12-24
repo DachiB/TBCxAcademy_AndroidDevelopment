@@ -7,7 +7,7 @@
     <string name="continue_with_google">continue with google</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
-    <string name="backbutton">backButton</string>
+    <string name="back_button">backButton</string>
     <string name="or">or</string>
     <string name="create_your_account">Create Your Account</string>
     <string name="sign_up_btn_text">Sign Up</string>
@@ -15,4 +15,5 @@
     <string name="remember_me">Remember Me</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="category_text">%1$s %2$s</string>
 </resources>
