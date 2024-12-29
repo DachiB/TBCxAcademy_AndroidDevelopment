@@ -16,4 +16,10 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="category_text">%1$s %2$s</string>
+    <string name="my_orders">My Orders</string>
+    <string name="pending">Pending</string>
+    <string name="delivered">Delivered</string>
+    <string name="delivering">Delivering</string>
+    <string name="cancelled">Cancelled</string>
+
 </resources>
